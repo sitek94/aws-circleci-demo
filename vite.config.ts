@@ -1,6 +1,7 @@
 /// <reference types="vitest" /> // ⬅️ Import the vite typings
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import eslintPlugin from 'vite-plugin-eslint'
 
 /**
  * Vite
@@ -10,7 +11,7 @@ import react from '@vitejs/plugin-react'
  * https://vitest.dev/guide/#configuring-vitest
  */
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), eslintPlugin()],
   test: {
     globals: true,
     environment: 'jsdom',
