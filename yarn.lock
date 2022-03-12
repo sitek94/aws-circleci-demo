@@ -676,6 +676,11 @@
     "@typescript-eslint/types" "5.14.0"
     eslint-visitor-keys "^3.0.0"
 
+"@uiw/react-github-corners@^1.5.3":
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/@uiw/react-github-corners/-/react-github-corners-1.5.3.tgz#68c7de16ab0b2ae3067222f667175660a931001e"
+  integrity sha512-/wa/zRCrfes/Sm//gc73SdclVQQOMxDJgEG711DjUaFl69+1QEe5SKzRE5gUZiUmDU8oFMpjMCowAwLPAnNmvA==
+
 "@vitejs/plugin-react@^1.0.7":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@vitejs/plugin-react/-/plugin-react-1.2.0.tgz#4cfb4c0475e93885e56d66ff15e12ef4c34b0af0"

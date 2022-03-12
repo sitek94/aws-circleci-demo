@@ -1,6 +1,10 @@
 {
   "name": "aws-circleci-demo",
+  "version": "1.0.0",
   "homepage": "https://sitek94.github.io/aws-circleci-demo",
+  "repository": {
+    "url": "https://github.com/sitek94/aws-circleci-demo"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -19,6 +23,7 @@
     "cy:ci:develop": "start-server-and-test 'yarn serve' http://localhost:3000 'yarn cy:run'"
   },
   "dependencies": {
+    "@uiw/react-github-corners": "^1.5.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },

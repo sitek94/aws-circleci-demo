@@ -124,7 +124,7 @@ jobs:
       - restorecache
       - yarn_install
       - savecache
-      - run: yarn test
+      - run: yarn test:ci
 
   build:
     executor: node
