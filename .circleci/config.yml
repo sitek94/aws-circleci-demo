@@ -152,6 +152,10 @@ jobs:
       - yarn_install
       - savecache
       - run: yarn run cy:ci:<< parameters.env >>
+      - store_artifacts:
+          path: ~/repo/cypress/videos
+      - store_artifacts:
+          path: ~/repo/cypress/screenshots
 
   push_to_s3:
     executor: aws-cli/default
