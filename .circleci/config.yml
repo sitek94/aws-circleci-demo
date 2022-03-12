@@ -11,13 +11,14 @@ executors:
       - image: cimg/node:16.14.0
 
 workflows:
-  deploy_develop:
+  check_pull_request:
     jobs:
       - checkout:
           filters:
             branches:
-              only:
-                - main
+              ignore:
+                - develop
+                - production
       - lint:
           requires:
             - checkout
@@ -29,12 +30,55 @@ workflows:
           requires:
             - checkout
 
-#      - push_to_s3:
-#          to: develop
-#          requires:
-#            - lint
-#            - test
-#            - build
+  deploy_develop:
+    jobs:
+      - checkout:
+          filters:
+            branches:
+              only:
+                - develop
+      - lint:
+          requires:
+            - checkout
+      - test:
+          requires:
+            - checkout
+
+      - build:
+          requires:
+            - checkout
+
+      - push_to_s3:
+          to: develop
+          requires:
+            - lint
+            - test
+            - build
+
+  deploy_production:
+    jobs:
+      - checkout:
+          filters:
+            branches:
+              only:
+                - production
+      - lint:
+          requires:
+            - checkout
+      - test:
+          requires:
+            - checkout
+
+      - build:
+          requires:
+            - checkout
+
+      - push_to_s3:
+          to: production
+          requires:
+            - lint
+            - test
+            - build
 
 jobs:
   checkout:
