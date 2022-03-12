@@ -62,6 +62,7 @@ workflows:
           requires:
             - lint
             - test
+            - build
             - run_cypress
 
   deploy_production:
@@ -82,12 +83,18 @@ workflows:
           requires:
             - checkout
 
+      - run_cypress:
+          requires:
+            - build
+          env: production
+
       - push_to_s3:
           to: production
           requires:
             - lint
             - test
             - build
+            - run_cypress
 
 jobs:
   checkout:
