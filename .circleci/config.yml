@@ -9,6 +9,10 @@ executors:
     working_directory: ~/repo
     docker:
       - image: cimg/node:16.14.0
+  cypress:
+    working_directory: ~/repo
+    docker:
+      - image: cypress/base:16.14.0
 
 workflows:
   check_pull_request:
@@ -48,12 +52,17 @@ workflows:
           requires:
             - checkout
 
+      - run_cypress:
+          requires:
+            - build
+          env: develop
+
       - push_to_s3:
           to: develop
           requires:
             - lint
             - test
-            - build
+            - run_cypress
 
   deploy_production:
     jobs:
@@ -122,7 +131,20 @@ jobs:
       - persist_to_workspace:
           root: ~/repo
           paths:
-            - dist
+            - build
+
+  run_cypress:
+    parameters:
+      env:
+        type: string
+    executor: cypress
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - restorecache
+      - yarn_install
+      - savecache
+      - run: yarn run cy:ci:<< parameters.env >>
 
   push_to_s3:
     executor: aws-cli/default
@@ -131,7 +153,7 @@ jobs:
         type: string
       from:
         type: string
-        default: dist
+        default: build
     working_directory: ~/repo
     steps:
       - attach_workspace:

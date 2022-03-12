@@ -11,6 +11,9 @@ import eslintPlugin from 'vite-plugin-eslint'
  * https://vitest.dev/guide/#configuring-vitest
  */
 export default defineConfig({
+  build: {
+    outDir: './build',
+  },
   plugins: [react(), eslintPlugin()],
   test: {
     globals: true,
