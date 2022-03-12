@@ -12,7 +12,7 @@ executors:
   cypress:
     working_directory: ~/repo
     docker:
-      - image: cypress/included
+      - image: cypress/browsers:node16.14.0-slim-chrome99-ff97
 
 workflows:
   check_pull_request:
