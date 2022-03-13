@@ -1,4 +1,6 @@
 # AWS and CircleCI Demo
+[![codecov](https://codecov.io/gh/sitek94/aws-circleci-demo/branch/develop/graph/badge.svg?token=G9K4OGMFAM)](https://codecov.io/gh/sitek94/aws-circleci-demo)
+
 
 ## Environments
 
