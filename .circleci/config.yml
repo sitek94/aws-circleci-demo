@@ -3,20 +3,16 @@ version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@2.1.0
   aws-s3: circleci/aws-s3@3.0
-  cypress: cypress-io/cypress@1.29.0
 
 executors:
   node:
     working_directory: ~/repo
     docker:
       - image: cimg/node:16.14.0
-  with-chrome-and-firefox:
+  cypress:
+    working_directory: ~/repo
     docker:
-      - image: cypress/browsers:node16.14.0-slim-chrome99-ff97
-#  cypress:
-#    working_directory: ~/repo
-#    docker:
-#      - image: cypress/browsers:node16.14.0-slim-chrome99-ff97
+      - image: cypress/base:16.14.0
 
 workflows:
   check_pull_request:
@@ -56,25 +52,10 @@ workflows:
           requires:
             - checkout
 
-      - cypress/install:
-          name: Setup
-          executor: with-chrome-and-firefox
-          yarn: true
-          build: 'yarn build'
+      - run_cypress:
           requires:
             - build
-
-      - cypress/run:
-          name: Cypress
-          browser: chrome
-          executor: with-chrome-and-firefox
-          wait-on: "http://localhost:3000"
-          yarn: true
-          start: yarn dev
-          record: true
-          ci-build-id: ${CIRCLE_SHA1:0:8}
-          requires:
-            - Setup
+          env: develop
 
       - push_to_s3:
           to: develop
@@ -82,7 +63,7 @@ workflows:
             - lint
             - test
             - build
-            - Cypress
+            - run_cypress
 
   deploy_production:
     jobs:
@@ -102,10 +83,10 @@ workflows:
           requires:
             - checkout
 
-      # - run_cypress:
-      #     requires:
-      #       - build
-      #     env: production
+      - run_cypress:
+          requires:
+            - build
+          env: production
 
       - push_to_s3:
           to: production
@@ -113,17 +94,17 @@ workflows:
             - lint
             - test
             - build
-            # - run_cypress
+            - run_cypress
 
 jobs:
   checkout:
     executor: node
     steps:
-    - checkout
-    - persist_to_workspace:
-        root: ~/repo
-        paths:
-          - .
+      - checkout
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - .
 
   lint:
     executor: node
@@ -143,7 +124,7 @@ jobs:
       - restorecache
       - yarn_install
       - savecache
-      - run: yarn test:ci
+      - run: yarn test
 
   build:
     executor: node
@@ -171,10 +152,6 @@ jobs:
       - yarn_install
       - savecache
       - run: yarn run cy:ci:<< parameters.env >>
-      - store_artifacts:
-          path: ~/repo/cypress/videos
-      - store_artifacts:
-          path: ~/repo/cypress/screenshots
 
   push_to_s3:
     executor: aws-cli/default
