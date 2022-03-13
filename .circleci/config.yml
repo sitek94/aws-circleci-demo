@@ -3,6 +3,7 @@ version: 2.1
 orbs:
   aws-cli: circleci/aws-cli@2.1.0
   aws-s3: circleci/aws-s3@3.0
+  codecov: codecov/codecov@3.2.2
 
 executors:
   node:
@@ -89,7 +90,8 @@ workflows:
           requires:
             - checkout
 
-      - run_cypress_production:
+      - run_cypress:
+          name: run_cypress_production
           requires:
             - build
           env: production
@@ -131,7 +133,8 @@ jobs:
       - restorecache
       - yarn_install
       - savecache
-      - run: yarn test
+      - run: yarn test:coverage
+      - codecov/upload
 
   build:
     executor: node
