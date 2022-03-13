@@ -20,7 +20,8 @@
     "serve": "serve build -p 3000 --single --no-clipboard",
     "cy:run": "cypress run",
     "cy:open": "cypress open",
-    "cy:ci:develop": "yarn build && start-server-and-test 'yarn serve' http://localhost:3000 'yarn cy:run'"
+    "cy:ci:develop": "yarn build:develop && start-server-and-test 'yarn serve' http://localhost:3000 'yarn cy:run'",
+    "cy:ci:production": "yarn build:production && start-server-and-test 'yarn serve' http://localhost:3000 'yarn cy:run'"
   },
   "dependencies": {
     "@uiw/react-github-corners": "^1.5.3",
@@ -40,7 +41,7 @@
     "@vitejs/plugin-react": "^1.0.7",
     "@vitest/ui": "latest",
     "c8": "^7.11.0",
-    "cypress": "^7.4.0",
+    "cypress": "^9.5.1",
     "eslint": "^8.11.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
@@ -53,5 +54,6 @@
     "vite": "^2.8.0",
     "vite-plugin-eslint": "^1.3.0",
     "vitest": "^0.6.0"
-  }
+  },
+  "license": "MIT"
 }
