@@ -33,7 +33,7 @@ workflows:
           requires:
             - checkout
           post-steps:
-            - report-coverage
+            - report_coverage
 
       - build:
           requires:
@@ -55,7 +55,7 @@ workflows:
           requires:
             - checkout
           post-steps:
-            - report-coverage
+            - report_coverage
 
       - build:
           requires:
@@ -90,8 +90,7 @@ workflows:
           requires:
             - checkout
           post-steps:
-            - report-coverage
-
+            - report_coverage
 
       - build:
           requires:
@@ -159,7 +158,8 @@ jobs:
   run_cypress:
     parameters:
       env:
-        type: string
+        type: enum
+        enum: [ develop, production ]
     executor: cypress
     steps:
       - attach_workspace:
@@ -191,14 +191,15 @@ commands:
     steps:
       - restore_cache:
           keys:
-            - v1-deps-{{ checksum "yarn.lock" }}
-            - v1-deps-
+            - v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
+            - v1-deps-{{ .Branch }}
+            - v1-deps
 
   savecache:
     description: Save yarn packages to cache
     steps:
       - save_cache:
-          key: v1-deps-{{ checksum "yarn.lock" }}
+          key: v1-deps-{{ .Branch }}-{{ checksum "package.json" }}
           paths:
             - ~/.cache
 
@@ -207,7 +208,7 @@ commands:
     steps:
       - run: yarn install --frozen-lockfile
 
-  report-coverage:
+  report_coverage:
     description: |
       Store coverage report as an artifact and send it to Codecov service
     steps:

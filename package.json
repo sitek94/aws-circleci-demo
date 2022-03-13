@@ -19,9 +19,10 @@
     "test:ui": "vitest --ui",
     "serve": "serve build -p 3000 --single --no-clipboard",
     "cy:run": "cypress run",
+    "cy:run:record": "cypress run --record --key ${CYPRESS_RECORD_KEY}",
     "cy:open": "cypress open",
-    "cy:ci:develop": "yarn build:develop && start-server-and-test 'yarn serve' http://localhost:3000 'yarn cy:run'",
-    "cy:ci:production": "yarn build:production && start-server-and-test 'yarn serve' http://localhost:3000 'yarn cy:run'"
+    "cy:ci:develop": "yarn build:develop && start-server-and-test 'yarn serve' http://localhost:3000 'yarn cy:run:record'",
+    "cy:ci:production": "yarn build:production && start-server-and-test 'yarn serve' http://localhost:3000 'yarn cy:run:record'"
   },
   "dependencies": {
     "@uiw/react-github-corners": "^1.5.3",
