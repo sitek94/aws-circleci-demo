@@ -23,9 +23,11 @@ workflows:
               ignore:
                 - develop
                 - production
+
       - lint:
           requires:
             - checkout
+
       - test:
           requires:
             - checkout
@@ -41,9 +43,11 @@ workflows:
             branches:
               only:
                 - develop
+
       - lint:
           requires:
             - checkout
+
       - test:
           requires:
             - checkout
@@ -53,17 +57,19 @@ workflows:
             - checkout
 
       - run_cypress:
+          name: run_cypress_develop
           requires:
             - build
           env: develop
 
       - push_to_s3:
+          name: push_to_s3_develop
           to: develop
           requires:
             - lint
             - test
             - build
-            - run_cypress
+            - run_cypress_develop
 
   deploy_production:
     jobs:
@@ -83,18 +89,19 @@ workflows:
           requires:
             - checkout
 
-      - run_cypress:
+      - run_cypress_production:
           requires:
             - build
           env: production
 
       - push_to_s3:
+          name: push_to_s3_production
           to: production
           requires:
             - lint
             - test
             - build
-            - run_cypress
+            - run_cypress_production
 
 jobs:
   checkout:
