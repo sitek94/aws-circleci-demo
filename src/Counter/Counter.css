@@ -1,0 +1,23 @@
+.Counter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 2em;
+}
+
+.Counter span {
+  border: 1px solid #eee;
+  min-width: 100px;
+}
+
+.Counter button {
+  font-size: 0.8em;
+}
+.Counter button:first-child {
+  border-bottom-left-radius: 0.5em;
+  border-top-left-radius: 0.5em;
+}
+.Counter button:last-child {
+  border-bottom-right-radius: 0.5em;
+  border-top-right-radius: 0.5em;
+}
