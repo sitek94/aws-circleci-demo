@@ -32,6 +32,8 @@ workflows:
       - test:
           requires:
             - checkout
+          post-steps:
+            - report-coverage
 
       - build:
           requires:
@@ -52,6 +54,8 @@ workflows:
       - test:
           requires:
             - checkout
+          post-steps:
+            - report-coverage
 
       - build:
           requires:
@@ -85,6 +89,9 @@ workflows:
       - test:
           requires:
             - checkout
+          post-steps:
+            - report-coverage
+
 
       - build:
           requires:
@@ -134,7 +141,6 @@ jobs:
       - yarn_install
       - savecache
       - run: yarn test:coverage
-      - codecov/upload
 
   build:
     executor: node
@@ -201,3 +207,11 @@ commands:
     steps:
       - run: yarn install --frozen-lockfile
 
+  report-coverage:
+    description: |
+      Store coverage report as an artifact and send it to Codecov service
+    steps:
+      - store_artifacts:
+          path: coverage
+      - codecov/upload:
+          file: coverage/coverage-final.json
