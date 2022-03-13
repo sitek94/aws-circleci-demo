@@ -1,13 +1,13 @@
-import pkg from '../package.json'
-import logo from './logo.svg'
-import './App.css'
-
 import * as React from 'react'
 import GithubCorner from '@uiw/react-github-corners'
 
-export function App() {
-  const [count, setCount] = React.useState(0)
+import pkg from '../../package.json'
+import logo from '../logo.svg'
+import './App.css'
 
+import { Counter } from '../Counter'
+
+export function App() {
   return (
     <div className="App">
       <GithubCorner
@@ -22,21 +22,14 @@ export function App() {
         <h1 data-cy="app-title">
           {pkg.name} v{pkg.version}
         </h1>
-        <p>
-          <button
-            type="button"
-            onClick={() => setCount(count => count + 1)}
-            data-cy="counter-btn"
-          >
-            count is: {count}
-          </button>
-        </p>
+        <Counter />
         <p>
           <a
             className="App-link"
             href="https://reactjs.org"
             target="_blank"
             rel="noopener noreferrer"
+            data-cy="app-link-react"
           >
             Learn React
           </a>
@@ -46,6 +39,7 @@ export function App() {
             href="https://vitejs.dev/guide/features.html"
             target="_blank"
             rel="noopener noreferrer"
+            data-cy="app-link-vite"
           >
             Vite Docs
           </a>

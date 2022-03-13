@@ -2,6 +2,6 @@
 
 declare namespace Cypress {
   interface Chainable {
-    getBySel(dataTestAttribute: string, args?: any): Chainable<Element>
+    getByDataCy(dataTestAttribute: string, args?: any): Chainable<Element>
   }
 }
